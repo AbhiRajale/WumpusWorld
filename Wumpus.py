@@ -1,8 +1,12 @@
+#Wumpus World Problem
+#Without Function To Shoot The Wumpus
+#To Display The Updated Map Every Time
 def dis():
   for i in range(4):
     print(n[i])
   print()
 
+#To Find The Next Possible Square To Move To
 def find(ch, r, c):
   if c + 1 <= 3 and n[r][c + 1] == ch:
     return [r, c + 1]
@@ -13,11 +17,13 @@ def find(ch, r, c):
   if r - 1 >= 0 and n[r - 1][c] == ch:
     return [r - 1, c]
 
+#Update Map Depending On The New Sensory Data
 def sense(r, c):
   if n[r][c] == '-':
     n[r][c] = m[r][c]
   return m[r][c]
 
+#Draw Some Inferences From Sensed Data
 def assume(s, r, c):
   if s == 'b' or s == 's':
     mkch('d', r, c)
@@ -27,6 +33,7 @@ def assume(s, r, c):
   else:
     return False
 
+#Apply Changes To The Map While Making Sure That Boundaries Are Maintained
 def mkch(x, r, c):
   if r - 1 >= 0 and (n[r - 1][c] == '-' or n[r - 1][c] == 'd'):
     n[r - 1][c] = x
@@ -41,6 +48,7 @@ def mkch(x, r, c):
     n[r][c + 1] = x
     think(r, c + 1)
 
+#Actually Update The Map Using Some Logic
 def think(r, c):
   p = 0
   w = 0
@@ -72,20 +80,24 @@ def think(r, c):
     n[r][c] = 'w'
   return 0
 
+#Sensory Data
 m = [['o', 'b', 'p', 'b'],
      ['s', 'o', 'b', 'o'],
      ['w', 'gsb', 'p', 'b'],
      ['s', 'o', 'b', 'p']]
+#Map Agent Is Making
 n = [['o', '-', '-', '-'],
      ['-', '-', '-', '-'],
      ['-', '-', '-', '-'],
      ['-', '-', '-', '-']]
+#Starting Point
 cord = [0, 0]
 print(cord)
 s = sense(cord[0], cord[1])
 assume(s, cord[0], cord[1])
 dis()
 ec = 0
+#Repeating Certain Steps Until The Problem Is Solved
 while True:
   newc = []
   for i in '-obs':
